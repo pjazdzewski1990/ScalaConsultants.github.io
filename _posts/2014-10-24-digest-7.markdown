@@ -16,6 +16,7 @@ Hi folks!
 
 * \[Physics\] [Quantum Cooling to (Near) Absolute Zero](https://www.youtube.com/watch?v=7jT5rbE69ho) 
 * \[Distributed Programming\] [GearPump from Intel](https://github.com/intel-hadoop/gearpump)
+* \[Distributed Ssytems\] [Actor model explained](http://channel9.msdn.com/Shows/Going+Deep/Hewitt-Meijer-and-Szyperski-The-Actor-Model-everything-you-wanted-to-know-but-were-afraid-to-ask)
 * \[tag\] [link-name](link)
 
 {DESCRIPTION}
