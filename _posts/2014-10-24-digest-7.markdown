@@ -15,6 +15,7 @@ Hi folks!
 {INTRO}
 
 * \[Physics\] [Quantum Cooling to (Near) Absolute Zero](https://www.youtube.com/watch?v=7jT5rbE69ho) 
+* \[Distributed Programming\] [GearPump from Intel](https://github.com/intel-hadoop/gearpump)
 * \[tag\] [link-name](link)
 
 {DESCRIPTION}
