@@ -17,7 +17,7 @@ tags:
 
 Hi folks! 
 
-Welcome to the new issue of Weekly Digest. Digest number '6' contains intersing topics from various fields. With this time we will try to make you curious about quantum computing, Android Wear, OCR, Web Developement and, of course, Scala. Have a good read.
+Welcome to the new issue of Weekly Digest. Digest number '6' contains intersting topics from various fields. This time we will try to make you curious about quantum computing, Android Wear, OCR, Web Developement and, of course, Scala. Enjoy reading and see you next week!
 
 * \[Scala\] [Activate persistence framework](http://activate-framework.org/)
 
@@ -29,7 +29,7 @@ This article is a brief introduction to Message API used by Android Wear. It wil
 
 * \[Optical Character Recognition\] [Project Naptha - practical OCR in browser](http://projectnaptha.com/)
 
-An interesting project showing possibilities of OCR technology. Naptha is a smart, slick plugin for your Chrome browser that allows on the fly text recognition and manipulation. Thanks to Naptha you can easily edit, remove or translate text in images for an better web browsing experience. 
+An interesting project showing possibilities of OCR technology. Naptha is a smart, slick plugin for your Chrome browser that allows on the fly text recognition and manipulation. Thanks to Naptha you can easily edit, remove or translate text in images for a better web browsing experience. 
 
 * \[Physics\] [In search of topological qubit](http://www.technologyreview.com/featuredstory/531606/microsofts-quantum-mechanics/)
 
@@ -37,7 +37,7 @@ MIT Technology Review magazine writes about scientists from Microsoft research l
 
 * \[Scala\] [Three reasons data engineers should learn Scala](http://www.hakkalabs.co/articles/three-reasons-data-eng-learn-scala)
 
-When talkig about Scala, we most often look from the perspective of a developer/programmer, but other IT related gropus might also benefit from switching to Scala. For instance Data Engineers. With the rapid growth of libraries like Apache Spark and others, the Scala ecosystem surely is welcoming for Data Scientists and Engineers. 
+When talking about Scala, we most often look from the perspective of a developer/programmer, but other IT related groups (e.g. data engineers) might also benefit from switching to Scala. With the rapid growth of libraries like Apache Spark and others, the Scala ecosystem surely is welcoming for data scientists and engineers. 
 
 * \[Web Development\] [How browsers work?](http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/)
 
