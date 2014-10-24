@@ -8,24 +8,38 @@ summary: Collection of interesting links from around of web chosen for you by Sc
 author: Scalac Team
 tags:
 - Scalac Weekly Digest
+- Scala
+- Android
+- Optical Character Recognition
+- Physics
+- Web Development
 ---
 
 Hi folks! 
 
-[DESC]
+Welcome to the new issue of Weekly Digest. Digest number '6' contains intersing topics from various fields. With this digest we will try to make you curious about quantum computing, Android Wear, OCR, Web Developement and, of course, Scala. Have a good read.
 
 * \[Scala\] [Activate persistence framework](http://activate-framework.org/)
-* \[Android\] [Retrofit example](http://inaka.net/blog/2014/10/10/android-retrofit-rest-client/)
+
+Activate is a framework for data persistence. It embraces Software Transactional Memory and pluggable persistence for both relational and non-relational databases. Activate can help Scala developers to deal with polyglot persistence and handling distributed transactions.
+
 * \[Android\] [Communicating with Android Wear](http://ptrprograms.blogspot.com/2014/10/a-guide-to-android-wear-message-api.html)
-* \[Artificial Intelligence\] [Using AI for hypothesis generation](http://www.economist.com/news/science-and-technology/21621704-new-type-software-helps-researchers-decide-what-they-should-be-looking)
-* \[Scala\] [Typelevel Scala](http://typelevel.org/blog/2014/09/02/typelevel-scala.html)
+
+This article is a brief introduction to Message API used by Android Wear. It will help you setup your environment and get started with a basic app. 
+
 * \[Optical Character Recognition\] [Project Naptha - practical OCR in browser](http://projectnaptha.com/)
+
+An interesting project showing possibilities of OCR technology. Naptha is a smart, slick plugin for your Chrome browser that allows on the fly text recognition and manipulation. Thanks to Naptha you can easily edit, remove or translate text in images for an better web browsing experience. 
+
 * \[Physics\] [In search of topological qubit](http://www.technologyreview.com/featuredstory/531606/microsofts-quantum-mechanics/)
-* \[Javascript\] [Writing custom DSL](https://www.youtube.com/watch?v=lm4jEcnWeKI&index=11&list=PL37ZVnwpeshFXOP2lqCUykYPXYNsK_fgN)
-* \[Security\] [Securely moving data by any means available](https://github.com/grantdobbe/endrun)
+
+MIT Technology Review magazine writes about scientists from Microsoft research labs and their aspiration to build faster more powerful computers using quantum technology.
+
 * \[Scala\] [Three reasons data engineers should learn Scala](http://www.hakkalabs.co/articles/three-reasons-data-eng-learn-scala)
-* \[Architecture\] [Sacrificial Architecture](http://architects.dzone.com/articles/sacrificial-architecture)
+
+When talkig about Scala, we most often look from the perspective of a developer/programmer, but other IT related gropus might also benefit from switching to Scala. For instance Data Engineers. With the rapid growth of libraries like Apache Spark and others, the Scala ecosystem surely is welcoming for Data Scientists and Engineers. 
+
 * \[Web Development\] [How browsers work?](http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/)
-* \[Distributed Systems\] [Actors - a different perspective](https://research.microsoft.com/en-us/projects/orleans/default.aspx)
-* \[TAG\] [title](link)
+
+We all use browsers. Some of us even work with them on a daily basis, but what do we exactly know about them ... ? Have you ever dug into the source code? Do you know how they differ? If not this article is for you. Although this article might be a bit older it's still a good introduction into the world of browsers. It surely will help you to understand why some errors are happening and why browsers behave in one way not in the other.
 
