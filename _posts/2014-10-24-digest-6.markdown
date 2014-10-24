@@ -17,7 +17,7 @@ tags:
 
 Hi folks! 
 
-Welcome to the new issue of Weekly Digest. Digest number '6' contains intersing topics from various fields. With this digest we will try to make you curious about quantum computing, Android Wear, OCR, Web Developement and, of course, Scala. Have a good read.
+Welcome to the new issue of Weekly Digest. Digest number '6' contains intersing topics from various fields. With this time we will try to make you curious about quantum computing, Android Wear, OCR, Web Developement and, of course, Scala. Have a good read.
 
 * \[Scala\] [Activate persistence framework](http://activate-framework.org/)
 
