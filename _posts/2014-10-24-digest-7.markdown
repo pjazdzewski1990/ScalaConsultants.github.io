@@ -18,6 +18,7 @@ Hi folks!
 * \[Distributed Programming\] [GearPump from Intel](https://github.com/intel-hadoop/gearpump)
 * \[Distributed Systems\] [Actor model explained](http://channel9.msdn.com/Shows/Going+Deep/Hewitt-Meijer-and-Szyperski-The-Actor-Model-everything-you-wanted-to-know-but-were-afraid-to-ask)
 * \[Frontend\] [Functional principles in frontend developement](http://www.infoq.com/presentations/om-clojurescript-facebook-react)
+* \[Functional Programming\] [Immutability and state management in functional programming](http://clojure.org/state)
 * \[tag\] [link-name](link)
 
 {DESCRIPTION}
