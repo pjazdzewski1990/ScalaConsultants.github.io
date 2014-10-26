@@ -19,6 +19,7 @@ Hi folks!
 * \[Distributed Systems\] [Actor model explained](http://channel9.msdn.com/Shows/Going+Deep/Hewitt-Meijer-and-Szyperski-The-Actor-Model-everything-you-wanted-to-know-but-were-afraid-to-ask)
 * \[Frontend\] [Functional principles in frontend developement](http://www.infoq.com/presentations/om-clojurescript-facebook-react)
 * \[Functional Programming\] [Immutability and state management in functional programming](http://clojure.org/state)
+* \[Testing\] [Even Tetris is hard to test](http://blog.jwhitham.org/2014/10/its-hard-to-test-software-even-simple.html)
 * \[tag\] [link-name](link)
 
 {DESCRIPTION}
