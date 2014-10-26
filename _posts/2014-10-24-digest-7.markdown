@@ -21,6 +21,7 @@ Hi folks!
 * \[Functional Programming\] [Immutability and state management in functional programming](http://clojure.org/state)
 * \[Testing\] [Even Tetris is hard to test](http://blog.jwhitham.org/2014/10/its-hard-to-test-software-even-simple.html)
 * \[Javascript\] [Building single page apps with Polymer](https://www.polymer-project.org/articles/spa.html)
+* \[Javascript\] [2 pillars of Javascript](https://medium.com/javascript-scene/the-two-pillars-of-javascript-ee6f3281e7f3)
 * \[tag\] [link-name](link)
 
 {DESCRIPTION}
