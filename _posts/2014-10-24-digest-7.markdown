@@ -22,6 +22,7 @@ Hi folks!
 * \[Testing\] [Even Tetris is hard to test](http://blog.jwhitham.org/2014/10/its-hard-to-test-software-even-simple.html)
 * \[Javascript\] [Building single page apps with Polymer](https://www.polymer-project.org/articles/spa.html)
 * \[Javascript\] [2 pillars of Javascript](https://medium.com/javascript-scene/the-two-pillars-of-javascript-ee6f3281e7f3)
+* \[Working\] [Best practices for working remotely](http://www.drdobbs.com/tools/7-best-practices-for-being-a-successful/240169183)
 * \[tag\] [link-name](link)
 
 {DESCRIPTION}
