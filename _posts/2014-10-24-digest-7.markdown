@@ -23,7 +23,7 @@ Hi folks!
 * \[Javascript\] [Building single page apps with Polymer](https://www.polymer-project.org/articles/spa.html)
 * \[Javascript\] [2 pillars of Javascript](https://medium.com/javascript-scene/the-two-pillars-of-javascript-ee6f3281e7f3)
 * \[Working\] [Best practices for working remotely](http://www.drdobbs.com/tools/7-best-practices-for-being-a-successful/240169183)
-* \[Virtual Reality\] (Live code with Oculus Rift)[https://www.youtube.com/watch?v=db-7J5OaSag]
+* \[Virtual Reality\] [Live code with Oculus Rift](https://www.youtube.com/watch?v=db-7J5OaSag)
 * \[tag\] [link-name](link)
 
 {DESCRIPTION}
