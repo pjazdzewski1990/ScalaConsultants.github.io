@@ -2,7 +2,7 @@
 comments: true
 date: 2014-10-24 16:10:00
 layout: post
-slug: digest-5
+slug: digest-7
 title: Scalac Weekly Digest#7
 summary: Collection of interesting links from around of web chosen for you by Scalac team
 author: Scalac Team
