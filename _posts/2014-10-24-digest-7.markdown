@@ -8,13 +8,21 @@ summary: Collection of interesting links from around of web chosen for you by Sc
 author: Scalac Team
 tags:
 - Scalac Weekly Digest
+- Physics
+- Frontend
+- Javascript
+- Working
+- Mobile
 ---
 
 Hi folks! 
 
-{INTRO}
+Welcome to this weeks edition of Scalac weekly digest. I hope you all had a great week and are ready to jump into links we prepared for you. This time we want to show you some interesing videos and share with you some ideas, that might (at least in our opinion). We hope you will enjoy it.  
 
 * \[Physics\] [Quantum Cooling to (Near) Absolute Zero](https://www.youtube.com/watch?v=7jT5rbE69ho)
+
+??? 
+
 * \[Frontend\] [Functional principles in frontend developement](http://www.infoq.com/presentations/om-clojurescript-facebook-react)
 
 A gentle intriduction to Om a ClojureScript library built on top of Facebook React framework. Interesting Not only for Clojure developers, since it shows how functional principles like immutability can be used in the frontend layer and how they can help to create simpler and more manageable applications.
