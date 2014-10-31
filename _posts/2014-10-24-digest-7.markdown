@@ -21,7 +21,7 @@ Welcome to this weeks edition of Scalac weekly digest. I hope you all had a grea
 
 * \[Physics\] [Quantum Cooling to (Near) Absolute Zero](https://www.youtube.com/watch?v=7jT5rbE69ho)
 
-??? 
+In this video Associate Professor Andrea Morello from University of New South Wales explains how it is possible to achieve temperatures very close 0K (−273.15°C) using quantum physics. He exaplains how 'zero-point motion' makes it possible to use Helium-3 and Helium-4 in a dilution fridge to get down to only thousandths of degrees above absolute zero.
 
 * \[Frontend\] [Functional principles in frontend developement](http://www.infoq.com/presentations/om-clojurescript-facebook-react)
 
