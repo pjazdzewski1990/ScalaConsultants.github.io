@@ -16,12 +16,25 @@ Hi folks!
 
 * \[Physics\] [Quantum Cooling to (Near) Absolute Zero](https://www.youtube.com/watch?v=7jT5rbE69ho)
 * \[Frontend\] [Functional principles in frontend developement](http://www.infoq.com/presentations/om-clojurescript-facebook-react)
+
+A gentle intriduction to Om a ClojureScript library built on top of Facebook React framework. Interesting Not only for Clojure developers, since it shows how functional principles like immutability can be used in the frontend layer and how they can help to create simpler and more manageable applications.
+
 * \[Javascript\] [Building single page apps with Polymer](https://www.polymer-project.org/articles/spa.html)
+
+In his article Eric Bidelman, Google employee working on Polymer framework, presents the power of this new framework. The key feature that Polymer is offering to frontend devs is the ability to create and resue tags, which are usualy small components that embed both presentation and logic. Using them Eric is able to quickly create an app that is responsive, dynamically loads content, has deep linking and more. Quite impressive if you ask me
+
 * \[Programming\] [Great talk about evolution of web](https://www.youtube.com/watch?v=FZYrlKbkLe8)
+
+A amusing and insightful talk given by Scott Hanselman at Velocity Santa Clara 2014. Definitely worth your time.
+
 * \[Javascript\] [2 pillars of Javascript](https://medium.com/javascript-scene/the-two-pillars-of-javascript-ee6f3281e7f3)
+
+ Javascript guru Eric Elliot talks about the biggest misconceptions programmers comming from 'classical OO languages' face when coding in Javascript. Sometimes, when you are to a new environment it's good to leave your old habits behind. And this article is all about it.
+
 * \[Working\] [Best practices for working remotely](http://www.drdobbs.com/tools/7-best-practices-for-being-a-successful/240169183)
+
+Since Scalac is working mostly remote we know exactly how hard is to work from a distant location, away from the rest of the team. This article shares some advice on how to deal with such a situation. 
+
 * \[Mobile\] [10 ingredients for an addictive mobile app](http://thenextweb.com/dd/2014/10/28/10-ingredients-concoct-subconsciously-addictive-mobile-app/1/)
 
-
-
-
+????? 
