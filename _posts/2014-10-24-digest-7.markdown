@@ -45,4 +45,4 @@ Since Scalac is working mostly remote we know exactly how hard is to work from a
 
 * \[Mobile\] [10 ingredients for an addictive mobile app](http://thenextweb.com/dd/2014/10/28/10-ingredients-concoct-subconsciously-addictive-mobile-app/1/)
 
-????? 
+10 rules that make youe mobile app so additive users won't turn it off. A must read for everyone developing or thiking about developing an mobile app.
