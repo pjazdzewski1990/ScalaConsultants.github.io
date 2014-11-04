@@ -17,6 +17,7 @@ Hi folks!
 * \[Javascript\] [Learn functional Javascript](https://jhusain.github.io/learnrx/)
 * \[Web\] [Browser of the future?](http://breach.cc/)
 * \[Scala\] [Scala bes practices](https://github.com/alexandru/scala-best-practices)
+* \[Programming\] [High Performance Networking in Chrome](http://aosabook.org/en/posa/high-performance-networking-in-chrome.html)
 * \[TAG\] [TITLE](LINK)
 
 {DESC}
