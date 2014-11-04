@@ -18,6 +18,7 @@ Hi folks!
 * \[Web\] [Browser of the future?](http://breach.cc/)
 * \[Scala\] [Scala bes practices](https://github.com/alexandru/scala-best-practices)
 * \[Programming\] [High Performance Networking in Chrome](http://aosabook.org/en/posa/high-performance-networking-in-chrome.html)
+* \[Process\] [Tips on writing reviewable code](https://secure.phabricator.com/book/phabflavor/article/writing_reviewable_code/)
 * \[TAG\] [TITLE](LINK)
 
 {DESC}
