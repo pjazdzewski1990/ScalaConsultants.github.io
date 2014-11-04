@@ -15,6 +15,7 @@ Hi folks!
 {INTRO}
 
 * \[Javascript\] [Learn functional Javascript](https://jhusain.github.io/learnrx/)
+* \[Web\] [Browser of the future?](http://breach.cc/)
 * \[TAG\] [TITLE](LINK)
 
 {DESC}
