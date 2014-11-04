@@ -14,6 +14,7 @@ Hi folks!
 
 {INTRO}
 
+* \[Javascript\] [Learn functional Javascript](https://jhusain.github.io/learnrx/)
 * \[TAG\] [TITLE](LINK)
 
 {DESC}
