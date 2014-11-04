@@ -16,6 +16,7 @@ Hi folks!
 
 * \[Javascript\] [Learn functional Javascript](https://jhusain.github.io/learnrx/)
 * \[Web\] [Browser of the future?](http://breach.cc/)
+* \[Scala\] [Scala bes practices](https://github.com/alexandru/scala-best-practices)
 * \[TAG\] [TITLE](LINK)
 
 {DESC}
