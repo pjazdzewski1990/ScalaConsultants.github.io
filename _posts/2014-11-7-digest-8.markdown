@@ -20,7 +20,8 @@ Hi folks!
 * \[Programming\] [High Performance Networking in Chrome](http://aosabook.org/en/posa/high-performance-networking-in-chrome.html)
 * \[Process\] [Tips on writing reviewable code](https://secure.phabricator.com/book/phabflavor/article/writing_reviewable_code/)
 * \[Robots\] [Getting started with Drones](http://paulstamatiou.com/getting-started-with-drones-quadcopters/)
-* \[Scala\] [Reaactive Rabbit](https://github.com/ScalaConsultants/reactive-rabbit)
+* \[Scala\] [Reactive Rabbit](https://github.com/ScalaConsultants/reactive-rabbit)
+* \[Scala\] [Scaling Gilt with Scala and microservices](http://www.infoq.com/presentations/scale-gilt)
 * \[TAG\] [TITLE](LINK)
 
 {DESC}
