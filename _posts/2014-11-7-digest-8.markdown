@@ -27,6 +27,7 @@ Hi folks!
 * \[Mobile\] [Android got a new WebView](http://developer.telerik.com/featured/android-5-0s-auto-updating-webview-means-mobile-apps/)
 * \[Mobile\] [Form validation on mobile is tricky](http://developer.telerik.com/featured/form-validation-right-mobile-applications/)
 * [Javascript] [Can angular maintain dominance?](http://developer.telerik.com/featured/can-angularjs-maintain-dominance/)
+* [Game development] [Build a multiplayer game with Phaser, Node and Angular](http://www.ng-newsletter.com/posts/building-games-with-angular.html)
 * \[TAG\] [TITLE](LINK)
 
 {DESC}
