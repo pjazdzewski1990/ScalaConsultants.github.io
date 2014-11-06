@@ -23,6 +23,7 @@ Hi folks!
 * \[Scala\] [Reactive Rabbit](https://github.com/ScalaConsultants/reactive-rabbit)
 * \[Scala\] [Scaling Gilt with Scala and microservices](http://www.infoq.com/presentations/scale-gilt)
 * \[Working\] [Open Source as a recruiting tool](http://readwrite.com/2014/10/24/open-source-recruiting-facebook-netflix-twitter)
+* \[Working\] [Best workplace is at home](http://qz.com/260933/the-case-for-a-distributed-workforce/)
 * \[TAG\] [TITLE](LINK)
 
 {DESC}
