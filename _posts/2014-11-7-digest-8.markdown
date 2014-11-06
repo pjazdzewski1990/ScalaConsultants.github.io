@@ -24,6 +24,9 @@ Hi folks!
 * \[Scala\] [Scaling Gilt with Scala and microservices](http://www.infoq.com/presentations/scale-gilt)
 * \[Working\] [Open Source as a recruiting tool](http://readwrite.com/2014/10/24/open-source-recruiting-facebook-netflix-twitter)
 * \[Working\] [Best workplace is at home](http://qz.com/260933/the-case-for-a-distributed-workforce/)
+* \[Mobile\] [Android got a new WebView](http://developer.telerik.com/featured/android-5-0s-auto-updating-webview-means-mobile-apps/)
+* \[Mobile\] [Form validation on mobile is tricky](http://developer.telerik.com/featured/form-validation-right-mobile-applications/)
+* [Javascript] [Can angular maintain dominance?](http://developer.telerik.com/featured/can-angularjs-maintain-dominance/)
 * \[TAG\] [TITLE](LINK)
 
 {DESC}
