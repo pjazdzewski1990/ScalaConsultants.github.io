@@ -15,20 +15,12 @@ Hi folks!
 {INTRO}
 
 * \[Javascript\] [Learn functional Javascript](https://jhusain.github.io/learnrx/)
-* \[Web\] [Browser of the future?](http://breach.cc/)
 * \[Scala\] [Scala bes practices](https://github.com/alexandru/scala-best-practices)
-* \[Programming\] [High Performance Networking in Chrome](http://aosabook.org/en/posa/high-performance-networking-in-chrome.html)
 * \[Process\] [Tips on writing reviewable code](https://secure.phabricator.com/book/phabflavor/article/writing_reviewable_code/)
 * \[Robots\] [Getting started with Drones](http://paulstamatiou.com/getting-started-with-drones-quadcopters/)
 * \[Scala\] [Reactive Rabbit](https://github.com/ScalaConsultants/reactive-rabbit)
-* \[Scala\] [Scaling Gilt with Scala and microservices](http://www.infoq.com/presentations/scale-gilt)
 * \[Working\] [Open Source as a recruiting tool](http://readwrite.com/2014/10/24/open-source-recruiting-facebook-netflix-twitter)
-* \[Working\] [Best workplace is at home](http://qz.com/260933/the-case-for-a-distributed-workforce/)
 * \[Mobile\] [Android got a new WebView](http://developer.telerik.com/featured/android-5-0s-auto-updating-webview-means-mobile-apps/)
-* \[Mobile\] [Form validation on mobile is tricky](http://developer.telerik.com/featured/form-validation-right-mobile-applications/)
-* [Javascript] [Can angular maintain dominance?](http://developer.telerik.com/featured/can-angularjs-maintain-dominance/)
 * [Game development] [Build a multiplayer game with Phaser, Node and Angular](http://www.ng-newsletter.com/posts/building-games-with-angular.html)
-* \[TAG\] [TITLE](LINK)
-* [Scala][Sources, Sinks and FlowGraphs](http://typesafe.com/blog/sources-sinks-and-flowgraphs)
 
 {DESC}
