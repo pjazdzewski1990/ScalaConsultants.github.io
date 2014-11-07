@@ -29,5 +29,6 @@ Hi folks!
 * [Javascript] [Can angular maintain dominance?](http://developer.telerik.com/featured/can-angularjs-maintain-dominance/)
 * [Game development] [Build a multiplayer game with Phaser, Node and Angular](http://www.ng-newsletter.com/posts/building-games-with-angular.html)
 * \[TAG\] [TITLE](LINK)
+* [Scala][Sources, Sinks and FlowGraphs](http://typesafe.com/blog/sources-sinks-and-flowgraphs)
 
 {DESC}
