@@ -12,15 +12,39 @@ tags:
 
 Hi folks! 
 
-{INTRO}
+This week is pumped with loads of interesting stuff. From functional programming in Javascript, through Reactive Streams implementation for RabbitMQ to code review best practices, Enjoy!
 
 * \[Javascript\] [Learn functional Javascript](https://jhusain.github.io/learnrx/)
+
+In this tutorial you'll learn functional Javascript by implementing map, filter, reduce and zip. If you have trouble solutions are provided, all you need is browser.
+
+
 * \[Scala\] [Scala bes practices](https://github.com/alexandru/scala-best-practices)
+
+Good Scala practices about things that aren't enforced by the compiler. I like the first rule: "0.1 MUST NOT follow advice blindly"
+
 * \[Process\] [Tips on writing reviewable code](https://secure.phabricator.com/book/phabflavor/article/writing_reviewable_code/)
+
+Simple advices how to make your code easier to review.
+
 * \[Robots\] [Getting started with Drones](http://paulstamatiou.com/getting-started-with-drones-quadcopters/)
+
+Want to play with drones? This article is packed with videos how to fly them properly and a list of good starter drones if you want to buy one.
+
 * \[Scala\] [Reactive Rabbit](https://github.com/ScalaConsultants/reactive-rabbit)
+
+Reactive Rabbit is a Scala implementation of Reactive Streams specification for RabbitMQ. It is implemented by our own Michal Kiedys
+
+
 * \[Working\] [Open Source as a recruiting tool](http://readwrite.com/2014/10/24/open-source-recruiting-facebook-netflix-twitter)
+
+Want to land job and Facebook or Twitter? Then start hacking on an open source project! 
+
 * \[Mobile\] [Android got a new WebView](http://developer.telerik.com/featured/android-5-0s-auto-updating-webview-means-mobile-apps/)
+
+
 * [Game development] [Build a multiplayer game with Phaser, Node and Angular](http://www.ng-newsletter.com/posts/building-games-with-angular.html)
 
-{DESC}
+Very detailed article about writing games with AngularJS. 
+
+
