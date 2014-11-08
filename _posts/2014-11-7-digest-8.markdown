@@ -8,6 +8,12 @@ summary: Collection of interesting links from around of web chosen for you by Sc
 author: Scalac Team
 tags:
 - Scalac Weekly Digest
+- Javascript
+- Scala
+- Process
+- Robots
+- Working
+- Mobile
 ---
 
 Hi folks! 
@@ -17,7 +23,6 @@ This week is pumped with loads of interesting stuff. From functional programming
 * \[Javascript\] [Learn functional Javascript](https://jhusain.github.io/learnrx/)
 
 In this tutorial you'll learn functional Javascript by implementing map, filter, reduce and zip. If you have trouble solutions are provided, all you need is browser.
-
 
 * \[Scala\] [Scala bes practices](https://github.com/alexandru/scala-best-practices)
 
