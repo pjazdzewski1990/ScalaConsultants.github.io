@@ -238,49 +238,56 @@ def tickCountdown(): Game = {
 
 ## 2. Running games - time for Akka
 Now that we have our game, we can turn it into life.
-We'll use Akka persistence to run games and make them persistent.
+We'll use Akka persistence to run games and make their events persistent.
+Let's start with extending `PersistentActor`.
+
+Here's what we need to implement in our `GameActor`:
+
+- `persistenceId` - unique id for our persistent aggregate - we'll use `gameId` here (it's an UUID)
+- `receiveCommand` - we'll implement this to handle _regular_ messages
+- `receiveRecover` - this is where previously persisted events for given `persistenceId` are thrown upon actor's creation. We'll implement it to restore game's state by applying these events. 
+
+What do we get from `PersistentActor`?
+
+- `persist` method - we'll use it to save generated game events to journal
+- `saveSnapshot` - can be used to create a snapshot (we won't use it)
+
+`GameActor` will be responsible for managing game's state (`game` variable), passing commands to it and updating the time.
 
 {% highlight scala %}
 class GameActor(id: GameId) extends PersistentActor {
   override val persistenceId = id.value
 
   var game: Game = Game.create(id)
+
+  override def receiveCommand = {
+    case command: GameCommand => handleResult(game.handleCommand(command))
+    ...
+  }
+
+  def handleResult(result: Either[GameRulesViolation, Game]) = result match {
+    case Right(updatedGame) =>
+      sender() ! CommandAccepted
+      handleChanges(updatedGame)
+    case Left(violation) =>
+      sender() ! CommandRejected(violation)
+  }
+
+  def handleChanges(updatedGame: Game) =
+    updatedGame.uncommittedEvents.foreach {
+      persist(_) { ev =>
+        game = game.applyEvent(ev).markCommitted
+        publishEvent(ev)
+        ...
+      }
+    }
+
+  def publishEvent(event: GameEvent) = {
+    system.eventStream.publish(event)
+  } 
 }
 {% endhighlight %}
 [\[GameActor.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/actor/GameActor.scala)
-
-This actor will be responsible for managing game's state (`game` variable), passing commands and updating the time.
-
-`GameActor` will handle commands and pass them to game.
-
-{% highlight scala %}
-override def receiveCommand = {
-  case command: GameCommand => handleResult(game.handleCommand(command))
-  ...
-}
-
-def handleResult(result: Either[GameRulesViolation, Game]) = result match {
-  case Right(updatedGame) =>
-    sender() ! CommandAccepted
-    handleChanges(updatedGame)
-  case Left(violation) =>
-    sender() ! CommandRejected(violation)
-  }
-
-def handleChanges(updatedGame: Game) =
-  updatedGame.uncommittedEvents.foreach {
-    persist(_) { ev =>
-      game = game.applyEvent(ev).markCommitted
-      publishEvent(ev)
-      ...
-    }
-  }
-
-def publishEvent(event: GameEvent) = {
-  system.eventStream.publish(event)
-} 
-{% endhighlight %}
-[\[GameActor.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/actor/GameActor.scala#L31)
 
 What's going on here?
 
@@ -573,11 +580,11 @@ For those impatient, you can also run webapp and navigate to 9000 to play the ga
 
 ## Summary
 I realize this post didn't cover all aspects in detail, I tried to focus on most important ones and I hope it puts some light on
-most of them. My goal was to give some basic idea of how CQRS/ES based application could look like.
+most of them. My goal was to give basic idea of how CQRS/ES based application could look like.
 
 As a reminder full source code is available on [Github](https://github.com/LukasGasior1/event-sourced-dice-game).
 
-In next part, we'll create simple web application to improve our gaming experiance!
+In the next part, we'll create simple web application to improve our gaming experiance!
 We'll see how to combine REST API calls with event listening to create decent user experiance.
 
 Stay tuned!
