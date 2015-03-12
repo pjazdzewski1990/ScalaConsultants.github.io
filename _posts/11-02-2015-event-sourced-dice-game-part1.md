@@ -85,6 +85,7 @@ case class RunningGame(...) extends Game {
 
 case class FinishedGame(...) extends Game {}
 {% endhighlight %}
+[\[game.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/domain/game.scala)
 
 As you can see, game can be in one of 3 states:
 
@@ -100,6 +101,7 @@ sealed trait GameCommand
 case class StartGame(players: Seq[PlayerId]) extends GameCommand
 case class RollDice(player: PlayerId) extends GameCommand
 {% endhighlight %}
+[\[command.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/domain/command.scala)
 
 I decided to make `Game` trait responsible for handling these commands, thats what `handleCommand` method does.
 It simply dispatches command to corresponding method calls (`start()` or `roll()`).
@@ -120,6 +122,7 @@ def handleCommand(command: GameCommand): Either[GameRulesViolation, Game] = comm
   }
 }
 {% endhighlight %}
+[\[game.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/domain/game.scala#L14)
 
 Apart from commands we'll have a method to update current turn countdown (`tickCountdown()`).
 It'll take care of updating remaining time for player's turn as well as turn timeout.
@@ -138,6 +141,7 @@ case object NotCurrentPlayerViolation extends GameRulesViolation
 case object GameAlreadyStartedViolation extends GameRulesViolation
 case object GameNotRunningViolation extends GameRulesViolation
 {% endhighlight %}
+[\[violation.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/domain/violation.scala)
 
 Here's quick explanation:
 
@@ -158,6 +162,7 @@ case class TurnCountdownUpdated(..)
 case class DiceRolled(..)
 case class GameFinished(..)
 {% endhighlight %}
+[\[event.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/domain/event.scala)
 
 I hope they are self explanatory.
 
@@ -174,6 +179,7 @@ Here's simplified version of `roll` method, that generates the event:
     }
   }
 {% endhighlight %}
+[\[game.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/domain/game.scala#L73)
 
 We can see that if everything is fine (it's the `currentPlayer` that rolls) we generate one event: `DiceRolled`.
 From `roll` method we return the result of applying this event to current game's state.
@@ -188,6 +194,7 @@ override def applyEvent = {
       uncommittedEvents = uncommittedEvents :+ ev)
 }
 {% endhighlight %}
+[\[game.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/domain/game.scala#L128)
 
 New copy of game is created and state updated (here, we add rolled number to `rolledNumbers` map).
 Also we add newly applied event to `uncommittedEvents` so that `roll` caller knows what
@@ -206,6 +213,7 @@ game state, just by applying them one by one.
 def applyEvents(events: E*): T =
     events.foldLeft(this)(_ applyEvent _)
 {% endhighlight %}
+[\[AggregateRoot.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/domain/AggregateRoot.scala#L10)
 
 This method is defined in `AggregateRoot` trait that game extends.
 
@@ -226,6 +234,7 @@ def tickCountdown(): Game = {
     } else applyEvent(countdownUpdated)
   }
 {% endhighlight %}
+[\[game.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/domain/game.scala#L102)
 
 ## 2. Running games - time for Akka
 Now that we have our game, we can turn it into life.
@@ -238,13 +247,14 @@ class GameActor(id: GameId) extends PersistentActor {
   var game: Game = Game.create(id)
 }
 {% endhighlight %}
+[\[GameActor.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/actor/GameActor.scala)
 
 This actor will be responsible for managing game's state (`game` variable), passing commands and updating the time.
 
 `GameActor` will handle commands and pass them to game.
 
 {% highlight scala %}
-override def receive = {
+override def receiveCommand = {
   case command: GameCommand => handleResult(game.handleCommand(command))
   ...
 }
@@ -270,6 +280,7 @@ def publishEvent(event: GameEvent) = {
   system.eventStream.publish(event)
 } 
 {% endhighlight %}
+[\[GameActor.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/actor/GameActor.scala#L31)
 
 What's going on here?
 
@@ -318,6 +329,7 @@ def cancelCountdownTick() = {
   tickCancellable = None
 }
 {% endhighlight %}
+[\[GameActor.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/actor/GameActor.scala#L31)
 
 ## 3. REST API
 To create new games and pass commands to existing ones, we'll expose REST API. We'll use spray-can as a server with following routes:
@@ -342,6 +354,7 @@ def handleCreate: Route = { ctx =>
   actorRefFactory.actorOf(CreateGameRequestActor.props(ctx, gameManager))
 }
 {% endhighlight %}
+[\[GameApi.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/api/GameApi.scala#L29)
 
 And corresponding per-request actor:
 
@@ -363,6 +376,7 @@ class CreateGameRequestActor(...) extends Actor {
 
 }
 {% endhighlight %}
+[\[CreateGameRequestActor.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/api/request/CreateGameRequestActor.scala)
 
 As you can see all commands go through `GameManager`. It's responsible for creating new `GameActor`s and
 passing commands to existing ones.
@@ -384,6 +398,7 @@ class GameManager extends Actor {
 
 }
 {% endhighlight %}
+[\[GameManager.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/actor/GameManager.scala)
 
 `SendCommand` is send by second per-request actor we have: `GameCommandRequestActor` used by `start` and `roll` routes.
 
@@ -431,6 +446,7 @@ def toMessage(event: GameEvent) = {
       "type" -> event.getClass.getSimpleName))
 }
 {% endhighlight %}
+[\[Boot.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/Boot.scala#L46)
 
 our publisher is an actor that catches game events from Akka's event stream and publishes them (`onNext`) in accordance to requested demand.
 
@@ -457,6 +473,7 @@ class EventPublisherActor extends ActorPublisher[GameEvent] {
 
 }
 {% endhighlight %}
+[\[EventPublisherActor.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/actor/EventPublisherActor.scala)
 
 Once it pushes an event, Reactive rabbit takes care of moving it to RabbitMQ.
 
