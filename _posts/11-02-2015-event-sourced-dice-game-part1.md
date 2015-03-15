@@ -105,7 +105,7 @@ case class RollDice(player: PlayerId) extends GameCommand
 [\[command.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/domain/command.scala)
 
 I decided to make `Game` trait responsible for handling these commands, thats what `handleCommand` method does.
-It simply dispatches commands to corresponding method calls (`start()` or `roll()`).
+It simply dispatches commands to corresponding method calls (`start` or `roll`).
 If a command cannot be applied in the current state (for example `RollDice` in `UninitializedGame`) it returns suitable violation.
 Some may prefer to have `handleCommand` implemented in each subclass and not in the `Game` trait. Either ways is fine.
 
@@ -123,7 +123,7 @@ def handleCommand(command: GameCommand): Either[GameRulesViolation, Game] = comm
 {% endhighlight %}
 [\[game.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/domain/game.scala#L14)
 
-Apart from commands we'll have a method to update the current turn countdown (`tickCountdown()`).
+Apart from commands we'll have a method to update the current turn countdown (`tickCountdown`).
 It'll take care of updating the time left in a player's turn as well as the turn timeout.
 We'll execute this method periodically as time passes.
 
@@ -216,7 +216,7 @@ def applyEvents(events: E*): T =
 
 This method is defined in the `AggregateRoot` trait that `Game` extends.
 
-Let's get back to `tickCountdown()` for a moment. 
+Let's get back to `tickCountdown` for a moment. 
 Altough it doesn't handle commands, it too will generate some events.
 
 {% highlight scala %}
@@ -243,9 +243,9 @@ Let's start with extending `PersistentActor`.
 
 Here's what we need to implement in our `GameActor`:
 
-- `persistenceId` - unique id for our persistent aggregate - we'll use `gameId` here (it's an UUID)
-- `receiveCommand` - we'll implement this to handle _regular_ messages
-- `receiveRecover` - this is where previously persisted events for given `persistenceId` are thrown upon actor's creation. We'll implement it to restore game's state by applying these events. 
+- `persistenceId` - Unique id for our persistent aggregate - we'll use `gameId` here (it's an UUID)
+- `receiveCommand` - It's called when _regular_ message is received by the actor. We'll implement this to handle game commands as well as self-sent message to update the time.
+- `receiveRecover` - When `PersistentActor` is created, first thing that it does is state recovery from its previously saved events (or snapshots). When `GameActor` with brand-new id is created, recovery finishes immediately (because there are no saved events). If, on the other hand, we create an actor for game that had some events saved before, all these events are given in `receiveRecover` before any messsage is passed to `receiveCommand` handler (they are cached internally). Messages that we'll handle in `receiveRecover` are either previously saved game events from which we'll rebuild most recent state or `RecoveryCompleted` which tells us that state recovery has finished.
 
 By extending `PersistentActor` we get (amongst other things) a `persist` method we'll use to save the generated events to the journal.
 
@@ -298,7 +298,7 @@ completed at some later point in time.
 4. If the command succeeded we persist all new events (remember `uncommittedEvents`?)
 5. After each event is persisted (second argument list in `persist` is a callback) 
 we apply it to current game state (the one from before command). Also we mark new state as commited, that is, 
-remove all events from `uncommittedEvents`. We don't want them anymore.
+remove all events from `uncommittedEvents`. We don't want them anymore (if we left them, by next command processing, we wouldn't know which events are "fresh" and which ones remained from previous commands)
 6. We publish an event (it just pushes it to Akka's built-in `EventStream`)
 7. We do other actions based on applied event - ommitted here for brevity, what we do
 here is we schedule turn countdown, stop the actor if the game has finished, etc.
