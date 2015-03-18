@@ -50,11 +50,11 @@ We'll begin with implementing main portion of game's logic - our domain. We'll d
 
 Basic idea behind event sourcing is quite simple: an aggregate root (our game) receives (non-persistent) **commands**. 
 
-As a result it generates persistent **events** that are saved to event store (this is what Akka persistence takes care of). Right after saving, events are **applied** to the aggregate root, changing it's **state** - it's the only way to change it.
+As a result it generates persistent **events** that are saved to an event store (this is what Akka persistence takes care of). Right after saving, events are **applied** to the aggregate root, changing it's **state** - it's the only way to modify it.
 
-Having this in mind, we can restore any past state of an aggregate just by subsequently applying its saved events. On the other hand, it means that if we want to recreate current state of an aggregate we need to take **all** of it's saved events and apply them ony by one. And yes, you are right - this may be inefficient. 
+Having this in mind, we can restore any past state of an aggregate just by subsequently applying its saved events. On the other hand, it means that if we want to recreate the current state of an aggregate we need to take **all** of it's saved events and apply them ony by one. And yes, you are right - this may be inefficient. 
 
-Here's where **snapshots** come into play - they are state dumps up to certain point in event stream. If we have a snapshot, we can simply use it as the current state and only apply events that were saved after this snapshot's creation. Usually it's useful to take snapshots from time to time (for example every 100 events) but we'll not cover them in this example.
+Here's where **snapshots** come into play - they are state dumps taking into account events up to a certain point in the event stream. If we have a snapshot we only need to reapply the events that happened after it's creation to obtain the current state. Usually it's a good idea to use them but here we'll leave them out for clarity.
 
 Summing up, here are the ingredients that we'll use:
 
@@ -105,8 +105,8 @@ case class RollDice(player: PlayerId) extends GameCommand
 [\[command.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/domain/command.scala)
 
 I decided to make `Game` trait responsible for handling these commands, thats what `handleCommand` method does.
-It simply dispatches commands to corresponding method calls (`start` or `roll`).
-If a command cannot be applied in the current state (for example `RollDice` in `UninitializedGame`) it returns suitable violation.
+It simply dispatches commands to the corresponding methods (either `start` or `roll`).
+If a command cannot be applied in the current state (for example `RollDice` in `UninitializedGame`) it returns the suitable violation.
 Some may prefer to have `handleCommand` implemented in each subclass and not in the `Game` trait. Either ways is fine.
 
 {% highlight scala %}
@@ -145,19 +145,21 @@ case object GameNotRunningViolation extends GameRulesViolation
 Here's quick explanation:
 
 - `NotEnoughPlayersViolation` - returned by `start` if there are not enough players to start a game (ie, less than 2)
-- `NotCurrentPlayerViolation` - returned by `roll` if it's not turn of player who tries to roll
+- `NotCurrentPlayerViolation` - returned by `roll` if the player who tries to roll is not the one who's turn it is
 - `GameAlreadyStartedViolation` - created when you try to pass a `Start` command to game that's already started
-- `GameNotRunningViolation` - indicates that the game isn't running yet when a player tries to `roll`
+- `GameNotRunningViolation` - indicates that a player tried to roll before the game was started
 
 ### Events
 If a command result is a valid game (not a violation), all events generated during the command's processing will be added to the returned game's `uncommittedEvents` field.
 You can later publish, persist or use them in any other way.
 
-Some of events that we'll use are:
+Events that we'll use are:
 
 {% highlight scala %}
 case class GameStarted(..)
 case class TurnCountdownUpdated(..)
+case class TurnChanged(...)
+case class TurnTimedOut(...)
 case class DiceRolled(..)
 case class GameFinished(..)
 {% endhighlight %}
@@ -196,10 +198,10 @@ override def applyEvent = {
 {% endhighlight %}
 [\[game.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/domain/game.scala#L128)
 
-New copy of a game is created with an updated state (here we add the rolled number to the `rolledNumbers` map).
+A new copy of the game is created with an updated state (here we add the rolled number to the `rolledNumbers` map).
 We also add the new event to `uncommitedEvents` so that the caller of `roll` knows what events were generated.
 
-All state changes happen as a result of events being applied. If we want to change game state
+All state changes happen as a result of events being applied. If we want to change the game state
 we need to generate an event and apply it.
 
 `applyEvent` is overriden in each of game subclasses and each of them handles different set of events.
@@ -237,19 +239,24 @@ def tickCountdown(): Game = {
 
 ## 2. Running games - time for Akka
 
-Now that we have our game logic, we can turn it into life.
+Now that we have our game logic, we can bring it to life.
 We'll use Akka to run games and persist events using Akka persistence.
-Let's start with extending `PersistentActor`.
 
-Here's what we need to implement in our `GameActor`:
+Key part of Akka persistence is `PersistentActor`. It's role is to manage event-driven state.
 
-- `persistenceId` - Unique id for our persistent aggregate - we'll use `gameId` here (it's an UUID)
-- `receiveCommand` - It's called when _regular_ message is received by the actor. We'll implement this to handle game commands as well as self-sent message to update the time.
-- `receiveRecover` - When `PersistentActor` is created, first thing that it does is state recovery from its previously saved events (or snapshots). When `GameActor` with brand-new id is created, recovery finishes immediately (because there are no saved events). If, on the other hand, we create an actor for game that had some events saved before, all these events are given in `receiveRecover` before any messsage is passed to `receiveCommand` handler (they are cached internally). Messages that we'll handle in `receiveRecover` are either previously saved game events from which we'll rebuild most recent state or `RecoveryCompleted` which tells us that state recovery has finished.
+When `PersistentActor` is created, first thing that it does is state recovery from its previously saved events (or snapshots). 
+If we create an actor that had some events saved before, all these events are given before any other message is handled (incoming messages are cached internally). Only after all past events were processed `PersistentActor` can handle _regular_ messages.
 
-By extending `PersistentActor` we get (amongst other things) a `persist` method we'll use to save the generated events to the journal.
+Where does the events come from then? Akka persistence gives us (amongst other things) a `persist` method which we can use to save events to the journal.
+Journals are pluggable and there's quite a bit of them available (including MongoDB, Cassandra, Kafka). The default one writes to the local filesystem - it's fine for our simple project.
 
-`GameActor` will be responsible for managing a running game's state (the `game` variable) - feeding it commands and ticking the time.
+Knowing this, there are several things we'll need to implement in our `GameActor`:
+
+- `persistenceId` - is the unique identifier of our persistent actor, used by the persistence mechanism to associate the stored events with our actor; here we'll use the `gameId` (which happens to be a UUID)
+- `receiveCommand` - handles _regular_ messages received by the actor; we'll implement this to handle game commands as well as self-sent message to update the time
+- `receiveRecover` - messages that we'll handle here are either previously saved game events from which we'll rebuild most recent state or `RecoveryCompleted` which tells us that state recovery has finished
+
+`GameActor` will be responsible for managing a running game's state (stored in it's `game` field) - feeding it commands and ticking the time.
 
 {% highlight scala %}
 class GameActor(id: GameId) extends PersistentActor {
@@ -281,7 +288,13 @@ class GameActor(id: GameId) extends PersistentActor {
 
   def publishEvent(event: GameEvent) = {
     system.eventStream.publish(event)
-  } 
+  }
+
+  override def receiveRecover = {
+    case ev: GameEvent =>
+      game = game.applyEvent(ev)
+    // ...
+  }
 }
 {% endhighlight %}
 [\[GameActor.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/actor/GameActor.scala)
@@ -299,9 +312,8 @@ completed at some later point in time.
 5. After each event is persisted (second argument list in `persist` is a callback) 
 we apply it to current game state (the one from before command). Also we mark new state as commited, that is, 
 remove all events from `uncommittedEvents`. We don't want them anymore (if we left them, by next command processing, we wouldn't know which events are "fresh" and which ones remained from previous commands)
-6. We publish an event (it just pushes it to Akka's built-in `EventStream`)
-7. We do other actions based on applied event - ommitted here for brevity, what we do
-here is we schedule turn countdown, stop the actor if the game has finished, etc.
+6. We publish an event to the `ActorSystem`'s default `eventStream`
+7. We perform other actions depending on what event was applied. Ommitted here for brevity.
 
 `GameActor` will also take care of updating the game's time (remember the `tickCountdown` method?). 
 
@@ -333,18 +345,25 @@ def cancelCountdownTick() = {
   tickCancellable.foreach(_.cancel())
   tickCancellable = None
 }
+
+override def receiveRecover = {
+  // ...
+  case RecoveryCompleted =>
+    if (game.isRunning)
+      scheduleCountdownTick()
+}
 {% endhighlight %}
 [\[GameActor.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/actor/GameActor.scala#L31)
 
 ## 3. REST API
 
-To create new games and pass commands to existing ones, we'll expose a REST API. We'll use spray-can as a server with following routes:
+To create new games and pass commands to existing ones, we'll expose a REST API. We'll use spray-can as a server with the following routes:
 
 - POST /game - create new game
 - POST /game/:id/start - start previously created game
 - POST /game/:id/roll/:player - roll request from given player
 
-I realize last two are not very restful, but for our simple example let's just stick with them.
+I realize last two are not very RESTful, but for our simple example let's just stick with them.
 
 We'll use the actor-per-request pattern, creating one actor to handle each request.
 
@@ -410,22 +429,22 @@ class GameManager extends Actor {
 
 Once a command is processed, the actor handling the request is stopped.
 
+## 4. Feeding the Rabbit
+
 We already know how to take some actions in our games, but how do we know what's actually happening in them?
 Let's get back to our events.
 
-## 4. Feeding the Rabbit
-
 For now events from our games just go to the `eventStream` and get forgotten.
 That's not very useful. We'd prefer them to be published for consumption by external clients.
-There are many possibilities: from exposing a REST API to fetch recent events (polling), through custom socket-based 
+There are many possibilities: from exposing a REST API for fetching recent events (polling), through a custom socket-based 
 pub/sub implementation, to full-blown message queue systems. We'll gear towards the latter and use RabbitMQ
 to publish our events.
 
-I'll use the [Reactive rabbit](https://github.com/ScalaConsultants/reactive-rabbit) library to easily bind a stream (of game events) to rabbit exchange.
+I'll use the [Reactive rabbit](https://github.com/ScalaConsultants/reactive-rabbit) library to easily bind a stream (of game events) to a rabbit exchange.
 
-Our events will go to headers exchange and will have `gameId` and `type` headers (which we can route on in our queues).
+Our events will be sent to a headers exchange and will have `gameId` and `type` headers (which we can route on in our queues).
 
-Here's how we create an exchange and bind it to publisher:
+Here's how we create an exchange and bind a publisher to it:
 
 {% highlight scala %}
 val connection = Connection()
@@ -455,7 +474,7 @@ def toMessage(event: GameEvent) = {
 {% endhighlight %}
 [\[Boot.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/Boot.scala#L46)
 
-Our publisher is an actor that catches game events from Akka's event stream and publishes them (`onNext`) in accordance to requested demand.
+Our publisher is an actor that catches game events from `ActorSystem`'s `eventStream` and publishes them (`onNext`) in accordance to requested demand.
 
 {% highlight scala %}
 class EventPublisherActor extends ActorPublisher[GameEvent] {
@@ -482,13 +501,13 @@ class EventPublisherActor extends ActorPublisher[GameEvent] {
 {% endhighlight %}
 [\[EventPublisherActor.scala\]](https://github.com/LukasGasior1/event-sourced-dice-game/blob/master/game/src/main/scala/lgasior/dicegame/actor/EventPublisherActor.scala)
 
-Once it pushes an event, Reactive rabbit takes care of moving it to RabbitMQ.
+Once we pass an event to `onNext` Reactive rabbit takes care of moving it to RabbitMQ.
 
 ## 5. Running
 
 Now that we have all the building blocks ready it's time to wire everything up and get it running.
 
-First, let's start RabbitMQ. We'll use a docker container to avoid the tedium of setting it up from scratch.
+First, let's start RabbitMQ. I prefer to use a docker container to avoid the tedium of setting it up from scratch.
 
 {% highlight bash %}
 $ docker run -d -p 5672:5672 -p 15672:15672 dockerfile/rabbitmq
@@ -498,7 +517,7 @@ Before we start creating games, we'll bind a queue to game_events exchange so th
 we can see passing events:
 
 1. Enter rabbit console. If you used docker above it's: http://localhost:15672/ (default login/pass: guest/guest)
-2. Go to Queues and in "Add a new queue" section enter queue name , for example "all_games_events".
+2. Go to Queues and in "Add a new queue" section enter queue name, for example "all_games_events".
 3. Click on newly created queue name and in "Bindings" section in "From exchange" field type "game_events"
 (leave remaining fields empty). This will bind our queue to all events from all games.
 
@@ -579,7 +598,7 @@ For the impatient there is also a web interface. Just `sbt "project webapp" run`
 ## Summary
 
 I realize this post didn't cover all aspects in detail, I tried to focus on most important ones and I hope it puts some light on
-most of them. My goal was to give basic idea of how CQRS/ES based application could look like.
+most of them. My goal was to give you a basic idea of how a CQRS/ES-based application could look like.
 
 As a reminder you can acces the full source code at [Github](https://github.com/LukasGasior1/event-sourced-dice-game).
 
