@@ -9,6 +9,8 @@
 
 spellcheck() {
   echo "Spellcheck for $1"
+  f=`find _posts/ -name "*$1*"`
+  echo "Files to check $f"
   r=`find _posts/ -name "*$1*" -exec cat {} \; | aspell list`
   echo "Spell check result are $r"
   echo -n "Do you want to continue [y/n] + [ENTER]: "
