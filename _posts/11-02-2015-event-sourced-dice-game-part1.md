@@ -247,7 +247,7 @@ Key part of Akka persistence is `PersistentActor`. It's role is to manage event-
 When `PersistentActor` is created, first thing that it does is state recovery from its previously saved events (or snapshots). 
 If we create an actor that had some events saved before, all these events are given before any other message is handled (incoming messages are cached internally). Only after all past events were processed `PersistentActor` can handle _regular_ messages.
 
-Where does the events come from then? Akka persistence gives us (amongst other things) a `persist` method which we can use to save events to the journal.
+Where do the events come from then? Akka persistence gives us (amongst other things) a `persist` method which we can use to save events to the journal.
 Journals are pluggable and there's quite a bit of them available (including MongoDB, Cassandra, Kafka). The default one writes to the local filesystem - it's fine for our simple project.
 
 Knowing this, there are several things we'll need to implement in our `GameActor`:
