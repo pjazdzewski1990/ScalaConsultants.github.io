@@ -203,7 +203,7 @@ We also add the new event to `uncommitedEvents` so that the caller of `roll` kno
 All state changes happen as a result of events being applied. If we want to change the game state
 we need to generate an event and apply it.
 
-`applyEvent` is overriden in each of game subclasses and each of them handles different set of events.
+`applyEvent` is overridden in each of game subclasses and each of them handles different set of events.
 For example `DiceRolled` event would be invalid in uninitialized state, thus it's not handled there.
 
 The boon of this approach is that having a list of past events we can easily restore the current
@@ -218,7 +218,7 @@ def applyEvents(events: E*): T =
 This method is defined in the `AggregateRoot` trait that `Game` extends.
 
 Let's get back to `tickCountdown` for a moment. 
-Altough it doesn't handle commands, it too will generate some events.
+Although it doesn't handle commands, it too will generate some events.
 
 {% highlight scala %}
 def tickCountdown(): Game = {
@@ -312,7 +312,7 @@ completed at some later point in time.
 we apply it to current game state (the one from before command). Also we mark new state as commited, that is, 
 remove all events from `uncommittedEvents`. We don't want them anymore (if we left them, by next command processing, we wouldn't know which events are "fresh" and which ones remained from previous commands)
 6. We publish an event to the `ActorSystem`'s default `eventStream`
-7. We perform other actions depending on what event was applied. Ommitted here for brevity.
+7. We perform other actions depending on what event was applied. Omitted here for brevity.
 
 `GameActor` will also take care of updating the game's time (remember the `tickCountdown` method?). 
 
@@ -599,10 +599,10 @@ For the impatient there is also a web interface. Just `sbt "project webapp" run`
 I realize this post didn't cover all aspects in detail, I tried to focus on most important ones and I hope it puts some light on
 most of them. My goal was to give you a basic idea of how a CQRS/ES-based application could look like.
 
-As a reminder you can acces the full source code at [Github](https://github.com/LukasGasior1/event-sourced-dice-game).
+As a reminder you can access the full source code at [Github](https://github.com/LukasGasior1/event-sourced-dice-game).
 
 In the next part, we'll create a simple web application.
-We'll see how to combine REST API calls with event listening to create a decent user experiance.
+We'll see how to combine REST API calls with event listening to create a decent user experience.
 
 Stay tuned!
 
