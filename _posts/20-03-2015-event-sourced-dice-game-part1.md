@@ -9,9 +9,8 @@ author: Łukasz Gąsior
 tags:
 - Event Sourcing
 - CQRS
-- Akka persistence
-- RabbitMQ
-- Reactive rabbit
+- Akka Persistence
+- Reactive Rabbit
 - DDD
 ---
 
