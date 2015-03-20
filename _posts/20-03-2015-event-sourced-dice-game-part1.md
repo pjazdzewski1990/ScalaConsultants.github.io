@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2015-02-11 16:10:00
+date: 2015-03-20 16:10:00
 layout: post
 slug: event-sourced-dice-game-part1
 title: Event-sourced game implementation example - Part 1/3&#58; Getting started
