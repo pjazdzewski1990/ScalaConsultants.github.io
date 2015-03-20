@@ -173,7 +173,7 @@ Here's a simplified version of the `roll` method, that generates the event:
 {% highlight scala %}
  def roll(player: PlayerId): Either[GameRulesViolation, Game] = {
     if (turn.currentPlayer == player) {
-      val rolledNumber = Random.nextInt(6) + 1
+      val rolledNumber = randomBetween(1, 6)
       applyEvent(DiceRolled(id, rolledNumber))
     } else {
       NotCurrentPlayerViolation
