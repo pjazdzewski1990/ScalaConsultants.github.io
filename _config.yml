@@ -1,4 +1,5 @@
 markdown: kramdown
+highlighter: pygments
 kramdown:
   use_coderay: true
 exclude: [deploy.sh]
