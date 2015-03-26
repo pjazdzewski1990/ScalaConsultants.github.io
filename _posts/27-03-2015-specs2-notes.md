@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2015-02-27 16:10:00
+date: 2015-03-27 16:10:00
 layout: post
 slug: specs2-notes
 title: Notes on Specs2
