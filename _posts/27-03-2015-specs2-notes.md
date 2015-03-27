@@ -67,7 +67,7 @@ class MathSpec extends Specification {
 }
 {% endhighlight %}
 
-The first option is very straightforward and works well for small tests, but is impractical for bigger ones or when you want to (for some reason) share the variables.
+The first option is very straightforward and works well for small tests, but is impractical for bigger ones or when you want to (for some reason) share the values.
 
 ## Implement custom Setup and Teardown
 
