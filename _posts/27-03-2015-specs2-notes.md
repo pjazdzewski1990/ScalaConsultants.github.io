@@ -77,8 +77,6 @@ First we need to create an helper for local setup and Teardown. We can do it lik
 
 {% highlight scala %}
 trait Context extends BeforeAfter {
-  var bar : Option[String] = Some("bar")
-
   def before: Any = println("Doing setup")
   def after: Any = println("Done. Cleanup")
 }
@@ -95,8 +93,6 @@ class MathSpec extends Specification {
    * Helper for creating test with custom setup/teardown functions
    */
   trait Context extends BeforeAfter {
-    var bar : Option[String] = Some("bar")
-
     def before: Any = println("Doing setup")
     def after: Any = println("Done. Cleanup")
   }
