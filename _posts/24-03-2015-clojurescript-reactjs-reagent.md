@@ -1,44 +1,44 @@
 ---
 comments: true
-date: 2015-03-24 16:10:00
+date: 2015-04-02 14:00:00
 layout: post
 slug: {functional-programming-on-frontend-with-react-clojurescript-reagent}
 title: Functional programming on frontend with React & ClojureScript
 summary: Lately all of my frontend work was done mostly using React. I really like React's functional approach to DOM manipulation and since I am fan of FP and interested in using functional languages I decided to give a try to ClojureScript and see how it might play together with React. In fact, those 2 technologies are playing together very nicely and enable you to build scalable and well performing UIs in functional way.
-author: Marek TOMAS
+author: Marek Tomas
 tags:
 - ClojureScript
 - JavaScript
 - Frontend
 ---
 
-## <a name="second" href="#second">Introduction</a>
+## <a name="introduction" href="#introduction">Introduction</a>
 I have been working and evaluating popular JavaScript frameworks such as AngularJS, Polymer, Ember and also emerging WebComponents for quite some time. In this blogpost I will try to explain why I found React to be most profound framework for building scalable and well performing web applications with taste of functional programming. In this tutorial we will introduce basics of ClojureScript as well and show how React plays nicely with ClojureScript through one of its wrappers called Reagent. Working app is included as well.
 
-## <a name="second" href="#second">What makes UI hard ?</a>
+## <a name="what-makes-ui-hard" href="#what-makes-ui-hard">What makes UI hard ?</a>
 
 One of the biggest and most common problems in the frontend web development is state management.
 
 
 
-Traditional approaches for managing state changes in UI, for example in AngularJS involve keeping track of changes in underlying data models and syncing those changes with DOM to keep UI up to-to-date.
+Traditional approaches for managing state changes in UI, for example in AngularJS involve keeping track of changes in underlying data models and syncing those changes with DOM to keep UI up to date.
 
 In general, it is a challenging task to manage state transitions that are responses to every possible user interaction. Coding in sense of transitions instead of states can be complex. The number of branches and checks we need to perform grows exponentially with the number of view states to manage. This basically means that developer (or framework) is responsible for handling every DOM mutation associated with user triggered interaction that changes state of the app. This is both error prone and hard to manage when complexity of your app grows over time.
 
-## <a name="second" href="#second">React - high level overview</a>
+## <a name="react-high-level-overview" href="#react-high-level-overview">React - high level overview</a>
 
-### What is React ?
+### <a name="what-is-react" href="#what-is-react">What is React ?</a>
 React is addressing the aforementioned challenges in a very neat and profound way. React authors define it as a **JavaScript library for creating UIs and addressing problem of building large applications with data that changes over time**. As already stated, mutable state is very complex thing to manage and reason about. So how is React approach to managing UI state different compared to others frameworks and libraries out there ?
 
-### Functional programming to the rescue
+### <a name="functional-programming-to-the-rescue" href="#functional-programming-to-the-rescue">Functional programming to the rescue</a>
 React brings the very basic essence of functional programming to the table. It provides abstractions such as components which are basically (pure) functions and get you away from imperatively touching the DOM.
 
 Basically, in terms of functional programming, you write [idempotent](http://en.wikipedia.org/wiki/Idempotence), composable functions. Data is coming to your functions as input which emit tree like representations as return values. When data changes, functions are re-run again with new data as input. React diffs the result of previous function call with new one and it effectively calculates the difference between the tree structures. From higher level perspective, React is a function which takes two DOMs and generates a list of DOM operations to be applied to the DOM, i.e., it is [referentially transparent](http://en.wikipedia.org/wiki/Referential_transparency_%28computer_science%29).
 
-### React basics
+### <a name="react-basics" href="#react-basics">React basics</a>
 Now let's see what React does in the browser with DOM. Diffing between tree representations is done internally by React through *indirection mechanism* called virtual DOM which mirrors the real DOM. Every time when input data changes new virtual DOM is generated and differences between them are translated into batch operations applied to real DOM. In React you work with [Components](http://facebook.github.io/react/docs/tutorial.html#your-first-component) which are reusable, basic building blocks of UI. In React, you simply update component internal state and then its UI is re-rendered accordingly. Let's see some practical code example to explain the idea of React components little bit more.
 
-### React code sample
+### <a name="react-code-sample" href="#react-code-sample">React - JavaScript code sample</a>
 
 {% highlight javascript %}
 
@@ -78,11 +78,11 @@ var Timer = React.createClass({
 React.render(<Timer label={"Sample timer"}/>, mountNode);
 {% endhighlight %}
 
-This is example of stateful component. To allow reuse of components each of the components has its own unique state accessed via *this.state*. When using stateful components, initial state is defined through *getInitialState* method. In case component’s state changes (next timer tick in this example), markup will be updated by re-invoking *render()* function.
+This is example of stateful component. To allow reuse of components each of the components has its own unique state accessed via `this.state`. When using stateful components, initial state is defined through `getInitialState` method. In case component’s state changes (next timer tick in this example), markup will be updated by re-invoking `render()` function.
 
-This component renders itself also based on properties. Properties are imutable data tjat turn dull components into configurable interface elements. In component instance they are accessed via *this.props*. Similarly as for state, it is possible to define default properties via *getDefaultProps* method. In this example, properties are passed via JavaScript syntax extension called JSX that looks similar to XML and can be found at the very bottom of code sample and also in *render* method. React provides tools that translate this JSX syntax into native JavaScript. Reasons for introducing JSX syntax are that it is more familiar for casual developers such as designers and brings natural way of expressing larger trees of components.
+This component renders itself also based on properties. Properties are imutable data that turn dull components into configurable interface elements. In component instance they are accessed via `this.props`. Similarly as for state, it is possible to define default properties via `getDefaultProps` method. In this example, properties are passed via JavaScript syntax extension called JSX that looks similar to HTML and can be found at the very bottom of code sample and also in `render` method. React provides tools that translate this JSX syntax into native JavaScript. Reasons for introducing JSX syntax are that it is more familiar for casual developers such as designers and brings natural way of expressing larger trees of components.
 
-Declaring hierarchy of components that should be returned as a result of calling *render* function on some arbitrary component might look for example like this:
+Declaring hierarchy of components that should be returned as a result of calling `render` function on some arbitrary component might look for example like this:
 
 {%highlight xml %}
 render: function() {
@@ -104,9 +104,9 @@ React API also provides possibility to hook in your code in methods executed at 
 React makes rendering of UI as simple as defining a function. Since React follows the functional paradigm, it is no surprise that the ClojureScript community has embraced React with open arms. In next chapter of this blogpost we will have a look at ClojureScript and one of its React wrappers called Reagent and will get our hands dirty with building sample app.
 
 
-## <a name="second" href="#second">React meets ClojureScript</a>
+## <a name="react-meets-clojurescript" href="#react-meets-clojurescript">React meets ClojureScript</a>
 
-### ClojureScript 101
+### <a name="clojurescript-101" href="#clojurescript-101">ClojureScript 101</a>
 
 For those of you who are not much familiar with ClojureScript, I strongly recommend to read [rationale](https://github.com/clojure/clojurescript/wiki/Rationale) which contains nice summary of what is ClojureScript about:
 
@@ -119,14 +119,14 @@ Another specific thing about ClojureScript is its syntax which mimics Clojure (L
 After grasping basics you should be ready to read code samples in the following chapter. ClojureScript syntax actually enables you to write very concise representations of component hierarchies using Reagent library. I found Reagent to be the simplest and most intuitive ClojureScript wrapper to start with. I recommend you to [watch out for Om](https://github.com/omcljs/om) which gets lot of attention these days and bundles few great ideas together.
 
 
-### Reagent - simple React wrapper
+### <a name="reagent-simple-react-wrapper" href="#reagent-simple-react-wrapper">Reagent - simple React wrapper</a>
 
 Reagent is a library that provides minimalistic interface between React and ClojureScript. It allows you to define React UIs of arbitrary complexity using only plain ClojureScript functions & data and describe it using [Hiccup-like syntax](https://github.com/weavejester/hiccup) which is very concise and easy to read. Your application is built together only using bunch of very basic but powerful concepts.
 
 Let's see how to define basic component using Reagent:
 
 {%highlight clojure%}
-(defn hello-world-component []
+(defn hello-component []
   (defn hello [name]
     [:div "hello " name]))
 {%endhighlight%}
@@ -166,9 +166,9 @@ Manipulating atoms is done through side effecting functions (suffixed with !). R
        "Seconds Elapsed: " @seconds-elapsed])))
 {%endhighlight%}
 
-Number of elapsed seconds is kept in its own atom - in this case unique state of component. Most common way to mutate atom value is to use built-in ClojureScript function *swap!*.
+Number of elapsed seconds is kept in its own atom - in this case unique state of component. Most common way to mutate atom value is to use built-in ClojureScript function `swap!`.
 
-Call to swap! accepts function as argument that is applied to value of atom and stored.
+Call to `swap!` accepts function as argument that is applied to value of atom and stored.
 
 {%highlight clojure%}
 swap! seconds-elapsed inc
@@ -176,24 +176,19 @@ swap! seconds-elapsed inc
 
 Those are the basic building blocks of Reagent which let you build well performing UIs.
 
-## A word about performance
+## <a name="a-word-about-performance" href="#word-about-performance">A word about performance</a>
 
 React itself is very fast. Reagent is able to be even faster because of optimizations done in ClojureScript. All of the actions that might trigger re-rendering components (derefing atom, changing args passed to component or its state) benefit from fast pointer comparisons between changed ClojureScript data structures and trigger re-rendering of components only when it is really needed. This means you have to care about performance rarely (for example when displaying long list of items) and define UI as you feel fit.
 
-### <a name="third" href="#third">Sample app
+### <a name="sample-app" href="#sample-app">Sample app
 
 By grasping basics and knowing benefits of using ClojureScript and Reagent tigether you should be ready to understand code of sample basic application Pexeso. Whole source code [can be found on GitHub](https://github.com/mtomas/clojurescript-reagent-pexeso) and you are encouraged to follow and experiment with this example.
 
 You can see working [demo deployed on Heroku](https://cljspexeso.herokuapp.com/) as well.
 
+<iframe width="100%" height="650" src="//jsfiddle.net/dms25way/4/embedded/result,html,css,resources,js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 
-<p align="center">
-<a href="https://cljspexeso.herokuapp.com/">
-  <img src="https://raw.githubusercontent.com/mtomas/clojurescript-reagent-pexeso/master/screens/screen.png" />
-</a>
-</p>
-
-## Pexeso walkthrough
+## <a name="pexeso-walkthrough" href="#pexeso-walkthrough">Pexeso walkthrough</a>
 
 To showcase Reagent together with ClojureScript I created a sample application Pexeso. App is meant to be played by one player and includes all of the described basic concepts.
 
@@ -208,7 +203,7 @@ $ brew install leiningen
 
 I decided to use excellent [Reagent Leiningen template](https://github.com/reagent-project/reagent-template) for projects using Reagent. This template packages everything needed for production ready ClojureScript applications. It comes up with nice development environment that allows you to do instant subsecond builds of your whole app and see them immediately swapped in the browser resulting in very efficient workflow for learning and trying things out.
 
-Whole application logic except template stuff has around ~100 LOC of code. Let's go through most important parts of it.
+Whole application logic except template stuff has around ~100 lines of code. Let's go through most important parts of it.
 
 
 We will start by defining global state that keeps track of cards:
@@ -216,6 +211,9 @@ We will start by defining global state that keeps track of cards:
 {% highlight clojure%}
 (def state (atom {:cards [] :last-symbol nil}))
 {% endhighlight %}
+
+[\[Source code\]](https://github.com/mtomas/clojurescript-reagent-pexeso/blob/master/src/cljs/react_cljs_blogpost/core.cljs#L15)
+
 
 
 Main UI is very simple, it basically consists of board of cards and symbol of last revealed card.
@@ -235,9 +233,10 @@ Main UI is very simple, it basically consists of board of cards and symbol of la
         (doall (for [card-state (@state :cards)] (card card-state)))
     ]])
 {% endhighlight %}
+[\[Source code\]](https://github.com/mtomas/clojurescript-reagent-pexeso/blob/master/src/cljs/react_cljs_blogpost/core.cljs#L79)
 
 
-You might wonder about **doall** function that wraps for comprehension. Point here is that we have to eagerly evaluate lazily generated sequence of atoms that hold cards' state. Otherwise Reagent would be unable to dereference them properly which would lead into inconsistencies. State of the card is then passed as an argument to function creating React components. Internals of component can be followed by reading the comments starting with **;**.
+You might wonder about `doall` function that wraps for comprehension. Point here is that we have to eagerly evaluate lazily generated sequence of atoms that hold cards' state. Otherwise Reagent would be unable to dereference them properly which would lead into inconsistencies. State of the card is then passed as an argument to function creating React components. Internals of component can be followed by reading the comments starting with **;**.
 
 {%highlight clojurescript %}
 (defn card [card-state]
@@ -281,6 +280,7 @@ You might wonder about **doall** function that wraps for comprehension. Point he
   )
  )
 {% endhighlight %}
+[\[Source code\]](https://github.com/mtomas/clojurescript-reagent-pexeso/blob/master/src/cljs/react_cljs_blogpost/core.cljs#L38)
 
 That is pretty much all worth elaborating that relates to logic of the game. [Whole source](https://github.com/mtomas/clojurescript-reagent-pexeso) is available on GitHub and I encourage you to try to implement some basic features - such as number of steps done to complete the game or even try to come up with feature that enables you to replay steps of finished game.
 
