@@ -8,7 +8,7 @@ summary: Lately all of my frontend work at ScalaC projects was done mostly using
 author: Marek Tomas
 tags:
 - ClojureScript
-- JavaScript
+- Javascript
 - Frontend
 ---
 
